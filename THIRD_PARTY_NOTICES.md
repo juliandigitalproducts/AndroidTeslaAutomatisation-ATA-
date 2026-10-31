@@ -1,6 +1,6 @@
 # Third-party notices
 
-ATA ships the libraries below. Versions and licenses are taken from the release builds of the phone module (`app`) and the watch module (`wear`), including transitive dependencies. The phone app shows the same data offline under Settings → About → Open source licenses (AboutLibraries).
+ATA ships the libraries below. Versions and licenses are taken from the release builds of the phone module (`app`) and the watch module (`wear`), including transitive dependencies. The phone shows the same data offline under Settings → About → Open source licenses (AboutLibraries). The watch shows the same list offline under About → Licenses.
 
 Google Play services, including `com.google.android.gms:play-services-wearable`, is proprietary. It is not open source. It is covered by the Android Software Development Kit License and the Google Play services terms.
 

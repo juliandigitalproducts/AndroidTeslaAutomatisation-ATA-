@@ -55,6 +55,20 @@ class AboutCopyTest {
     assertTrue(read("docs/play/PLAY_CONSOLE.md").contains(stringValue(en, "about_privacy_url")))
   }
 
+  @Test
+  fun noticeBodyListsPlayServicesAsProprietary() {
+    val en = stringValue(read("app/src/main/res/values/strings.xml"), "about_notice_body")
+    val de = stringValue(read("app/src/main/res/values-de/strings.xml"), "about_notice_body")
+    assertTrue(en.contains("both listed under Open source licenses"))
+    assertTrue(en.contains("The Google Play services library is proprietary (Android SDK / Google Play services terms)."))
+    assertTrue(de.contains("beide unter „Open-Source-Lizenzen“ aufgeführt"))
+    assertTrue(de.contains("Die Google-Play-Dienste-Bibliothek ist proprietär (Android SDK / Google Play services terms)."))
+    assertFalse(de.contains("stehen unter Open-Source-Lizenzen"))
+    val notices = read("THIRD_PARTY_NOTICES.md")
+    assertTrue(notices.contains("The watch shows the same list offline under About → Licenses."))
+    assertFalse(notices.contains("The phone app shows the same data offline"))
+  }
+
   private fun read(relative: String): String {
     val file = listOf(File(relative), File("../$relative"), File("../../$relative")).firstOrNull { it.isFile }
       ?: error("Missing $relative from ${File(".").absolutePath}")
