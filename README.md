@@ -538,6 +538,10 @@ signed updates that install over an existing install.
   bundling it into a paid or ad‑supported product or service, or otherwise using it to generate
   revenue.
 - See [NOTICE](NOTICE) for third‑party attributions (Tesla vehicle‑command protocol, Apache‑2.0).
+- See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for every dependency, its version and license,
+  including the proprietary Google Play services library, plus the note that Google Maps, Waze and
+  the Tesla app are only opened via an Android intent and that the images and graphics are the
+  author's own works.
 - ATA is **not affiliated with, endorsed by, or sponsored by Tesla, Inc.** "Tesla" and related
   marks are trademarks of Tesla, Inc., used only to describe interoperability.
 - ATA stores your data **only on your device** and needs no account or internet of its own for its

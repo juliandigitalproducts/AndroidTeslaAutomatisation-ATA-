@@ -227,8 +227,13 @@ private fun WearApp() {
   val gridActions = cfg.actions.take(gridSize)
   val moreActions = cfg.actions.drop(gridSize)
   val pager = rememberPagerState(pageCount = { 3 })
+  var showAbout by remember { mutableStateOf(false) }
 
   MaterialTheme {
+    if (showAbout) {
+      WearAboutScreen(onBack = { showAbout = false })
+      return@MaterialTheme
+    }
     Scaffold(
       timeText = { if (pager.currentPage == 0) StatusTimeText(car, round) else TimeText() },
       pageIndicator = { HorizontalPageIndicator(pageIndicatorState = remember(pager) { PagerIndicator(pager) }) },
@@ -276,6 +281,7 @@ private fun WearApp() {
             },
             vin = vin,
             paired = paired,
+            onAbout = { showAbout = true },
             onPair = {
               scope.launch {
                 val ok = WearSync.openPairingOnPhone(context)
@@ -485,11 +491,14 @@ private fun isActive(id: String, s: VehicleSnapshot): Boolean = when (id) {
 
 /** "⚡ 22 kW · 1 h · +20.0 kWh" while charging. */
 @Composable
-private fun chargeLine(s: VehicleSnapshot): String = listOfNotNull(
-  "⚡ ${s.chargingPowerKw} kW".takeIf { s.chargingPowerKw > 0 } ?: "⚡",
-  formatMinutes(s.minutesToFull).takeIf { s.minutesToFull > 0 },
-  ("+" + String.format(java.util.Locale.getDefault(), "%.1f kWh", s.chargeEnergyAddedKwh)).takeIf { s.chargeEnergyAddedKwh > 0f },
-).joinToString(" · ")
+private fun chargeLine(s: VehicleSnapshot): String {
+  val locale = androidx.compose.ui.platform.LocalLocale.current.platformLocale
+  return listOfNotNull(
+    "⚡ ${s.chargingPowerKw} kW".takeIf { s.chargingPowerKw > 0 } ?: "⚡",
+    formatMinutes(s.minutesToFull).takeIf { s.minutesToFull > 0 },
+    ("+" + String.format(locale, "%.1f kWh", s.chargeEnergyAddedKwh)).takeIf { s.chargeEnergyAddedKwh > 0f },
+  ).joinToString(" · ")
+}
 
 private fun formatMinutes(m: Int): String = when {
   m < 60 -> "$m min"
@@ -534,7 +543,8 @@ private fun StatusCard(s: VehicleSnapshot?, name: String, round: Boolean) {
         if (s.charging) {
           Text(listOfNotNull("⚡ ${s.chargingPowerKw} kW".takeIf { s.chargingPowerKw > 0 } ?: "⚡", formatMinutes(s.minutesToFull).takeIf { s.minutesToFull > 0 }).joinToString(" · "), fontSize = 12.sp, color = CHARGE)
           if (s.chargeEnergyAddedKwh > 0f) {
-            Text("+" + String.format(java.util.Locale.getDefault(), "%.1f kWh", s.chargeEnergyAddedKwh), fontSize = 11.sp, color = CHARGE)
+            val locale = androidx.compose.ui.platform.LocalLocale.current.platformLocale
+            Text("+" + String.format(locale, "%.1f kWh", s.chargeEnergyAddedKwh), fontSize = 11.sp, color = CHARGE)
           }
         } else {
           val lock = when (s.locked) { true -> "🔒"; false -> "🔓"; null -> "" }
@@ -557,6 +567,7 @@ private fun MoreList(
   onToggleKeyCard: () -> Unit,
   vin: String,
   paired: Boolean,
+  onAbout: () -> Unit,
   onPair: () -> Unit,
 ) {
   val context = LocalContext.current
@@ -613,6 +624,14 @@ private fun MoreList(
           textAlign = TextAlign.Center,
         )
       }
+    }
+    item {
+      Chip(
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(stringResource(R.string.wear_about)) },
+        colors = ChipDefaults.secondaryChipColors(),
+        onClick = onAbout,
+      )
     }
   }
 }

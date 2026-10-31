@@ -58,6 +58,13 @@ fun BackupScreen(vm: AtaViewModel, onBack: () -> Unit) {
   var message by remember { mutableStateOf<String?>(null) }
   var pending by remember { mutableStateOf<ByteArray?>(null) }
   var summary by remember { mutableStateOf<SettingsBackup.Summary?>(null) }
+  val exportDone = stringResource(R.string.backup_export_done)
+  val exportFailed = stringResource(R.string.backup_export_failed)
+  val corrupt = stringResource(R.string.backup_error_corrupt)
+  val notAta = stringResource(R.string.backup_error_not_ata)
+  val newer = stringResource(R.string.backup_error_newer)
+  val imported = stringResource(R.string.backup_import_done)
+  val importedPartial = stringResource(R.string.backup_import_done_partial)
 
   val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri ->
     if (uri == null) return@rememberLauncherForActivityResult
@@ -72,7 +79,7 @@ fun BackupScreen(vm: AtaViewModel, onBack: () -> Unit) {
         }
       }.isSuccess
       busy = false
-      message = context.getString(if (ok) R.string.backup_export_done else R.string.backup_export_failed)
+      message = if (ok) exportDone else exportFailed
     }
   }
   val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
@@ -86,13 +93,17 @@ fun BackupScreen(vm: AtaViewModel, onBack: () -> Unit) {
       }.getOrNull()
       if (bytes == null) {
         busy = false
-        message = context.getString(R.string.backup_error_corrupt)
+        message = corrupt
         return@launch
       }
       when (val outcome = vm.previewBackup(bytes, Build.VERSION.SDK_INT)) {
         is SettingsBackup.Outcome.Rejected -> {
           busy = false
-          message = context.getString(rejectRes(outcome.reason))
+          message = when (outcome.reason) {
+            SettingsBackup.RejectReason.NOT_ATA -> notAta
+            SettingsBackup.RejectReason.NEWER -> newer
+            SettingsBackup.RejectReason.CORRUPT, SettingsBackup.RejectReason.TOO_LARGE -> corrupt
+          }
         }
         is SettingsBackup.Outcome.Ready -> {
           busy = false
@@ -177,13 +188,11 @@ fun BackupScreen(vm: AtaViewModel, onBack: () -> Unit) {
             busy = true
             vm.commitBackup(bytes, Build.VERSION.SDK_INT) { result ->
               busy = false
-              message = context.getString(
-                when (result) {
-                  BackupCommit.REJECTED -> R.string.backup_error_corrupt
-                  BackupCommit.IMPORTED -> R.string.backup_import_done
-                  BackupCommit.IMPORTED_PARTIAL -> R.string.backup_import_done_partial
-                },
-              )
+              message = when (result) {
+                BackupCommit.REJECTED -> corrupt
+                BackupCommit.IMPORTED -> imported
+                BackupCommit.IMPORTED_PARTIAL -> importedPartial
+              }
             }
           },
         ) { Text(stringResource(R.string.backup_import)) }
@@ -220,12 +229,6 @@ private fun backupPreviewLines(summary: SettingsBackup.Summary): List<String> = 
   summary.wmiWarnings.forEach { add(stringResource(R.string.backup_preview_wmi, it)) }
   summary.checkDigitWarnings.forEach { add(stringResource(R.string.backup_preview_check, it)) }
   if (summary.criticalOverlap) add(stringResource(R.string.backup_preview_critical))
-}
-
-private fun rejectRes(reason: SettingsBackup.RejectReason): Int = when (reason) {
-  SettingsBackup.RejectReason.NOT_ATA -> R.string.backup_error_not_ata
-  SettingsBackup.RejectReason.NEWER -> R.string.backup_error_newer
-  SettingsBackup.RejectReason.CORRUPT, SettingsBackup.RejectReason.TOO_LARGE -> R.string.backup_error_corrupt
 }
 
 /** Reads at most 64 KB + 1 byte, so an oversized file is rejected without keeping the rest. */

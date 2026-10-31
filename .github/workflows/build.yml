@@ -57,7 +57,7 @@ jobs:
       - name: Unit tests
         run: |
           set -o pipefail
-          ./gradlew --no-daemon --stacktrace :core:testDebugUnitTest 2>&1 | tee -a build.log
+          ./gradlew --no-daemon --stacktrace :core:testDebugUnitTest :app:testDebugUnitTest 2>&1 | tee -a build.log
 
       - name: Build phone + wear APKs (arm64-v8a)
         run: |

@@ -6,6 +6,16 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.aboutlibraries.android)
+}
+
+aboutLibraries {
+  collect {
+    configPath.set(layout.projectDirectory.dir("../config/aboutlibraries"))
+  }
+  export {
+    prettyPrint.set(true)
+  }
 }
 
 val WEAR_VERSION_CODE_OFFSET = 1_000_000
@@ -106,6 +116,7 @@ dependencies {
   implementation(libs.concurrent.futures)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.serialization.json)
+  implementation(libs.aboutlibraries.core)
 
   debugImplementation(libs.androidx.ui.tooling)
 }

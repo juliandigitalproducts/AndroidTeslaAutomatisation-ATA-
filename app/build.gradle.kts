@@ -6,6 +6,17 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.aboutlibraries.android)
+}
+
+aboutLibraries {
+  // Shared license overrides (play-services-wearable is proprietary). Path is not the module parent.
+  collect {
+    configPath.set(layout.projectDirectory.dir("../config/aboutlibraries"))
+  }
+  export {
+    prettyPrint.set(true)
+  }
 }
 
 // Google Play build (-PataPlay, the App Bundles from CI) uses its own package name; the GitHub APKs keep
@@ -101,6 +112,12 @@ dependencies {
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.play.services.wearable)
+  implementation(libs.aboutlibraries.compose.m3)
 
   debugImplementation(libs.androidx.ui.tooling)
+  testImplementation(libs.junit)
+}
+
+tasks.matching { it.name == "testDebugUnitTest" }.configureEach {
+  dependsOn("prepareLibraryDefinitionsDebug")
 }
