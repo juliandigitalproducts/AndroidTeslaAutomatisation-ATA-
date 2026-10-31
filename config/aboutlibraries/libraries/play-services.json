@@ -1,0 +1,4 @@
+{
+  "uniqueId": "com\\.google\\.android\\.gms:.*::regex",
+  "tag": "proprietary"
+}

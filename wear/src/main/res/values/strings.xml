@@ -56,4 +56,12 @@
     <string name="wear_more_actions">More actions</string>
     <string name="wear_tap_again_short">Tap again</string>
     <string name="wear_tap_to_confirm">Tap to confirm</string>
+    <string name="back">Back</string>
+    <string name="wear_about">About</string>
+    <string name="wear_about_version">Version %1$s</string>
+    <string name="wear_about_disclaimer">Not affiliated with, endorsed by or sponsored by Tesla, Inc. \"Tesla\" is a trademark of Tesla, Inc. Use at your own risk.</string>
+    <string name="wear_about_license">Source-available, non-commercial license. Commercial use requires prior written permission from the author. Open-source components are listed under Licenses. Google Play services (Wearable) is proprietary (Android SDK / Google Play services terms).</string>
+    <string name="wear_about_privacy">ATA stores data on your devices and has no account. Google Play services is the technical channel for the Wear Data Layer between your phone and watch. Google privacy policy: policies.google.com/privacy</string>
+    <string name="wear_about_licenses">Licenses</string>
+    <string name="wear_about_license_missing">No license text.</string>
 </resources>

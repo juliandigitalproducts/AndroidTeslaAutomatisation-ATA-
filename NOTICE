@@ -13,3 +13,8 @@ documented Tesla vehicle command protocol:
   https://github.com/teslamotors/vehicle-command  (Apache License 2.0)
 Any Protocol Buffer definitions or protocol details derived from that project
 remain under the Apache License 2.0.
+
+Third-party software shipped with ATA, including open-source components and the
+proprietary Google Play services library (Android SDK / Google Play services
+terms), is listed with versions and licenses in THIRD_PARTY_NOTICES.md.
+The teslamotors/vehicle-command attribution above stays in this NOTICE as well.

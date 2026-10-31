@@ -80,6 +80,15 @@
     <string name="about_description">ATA sends commands to your Tesla and automates them via shortcuts, Samsung routines, widgets and Wear OS.</string>
     <string name="about_disclaimer">Not affiliated with, endorsed by or sponsored by Tesla, Inc. \"Tesla\" is a trademark of Tesla, Inc. Use at your own risk.</string>
     <string name="about_license">Source-available, non-commercial license. Commercial use requires prior written permission from the author.</string>
+    <string name="about_licenses">Open source licenses</string>
+    <string name="about_privacy">Privacy policy</string>
+    <string name="about_source">Source code</string>
+    <string name="about_notices">Notices</string>
+    <string name="about_privacy_url" translatable="false">https://github.com/juliandigitalproducts/AndroidTeslaAutomatisation-ATA-/blob/main/docs/privacy-policy.md</string>
+    <string name="about_source_url" translatable="false">https://github.com/juliandigitalproducts/AndroidTeslaAutomatisation-ATA-</string>
+    <string name="about_notice_url" translatable="false">https://github.com/juliandigitalproducts/AndroidTeslaAutomatisation-ATA-/blob/main/NOTICE</string>
+    <string name="about_notice_open">Open NOTICE</string>
+    <string name="about_notice_body">ATA is licensed under the ATA License (Source-Available, Non-Commercial). See the LICENSE file. Commercial use requires prior written permission from the copyright holder.\n\nATA is not affiliated with, endorsed by, or sponsored by Tesla, Inc. \"Tesla\" is a trademark of Tesla, Inc.\n\nThe BLE features follow the publicly documented Tesla vehicle command protocol (https://github.com/teslamotors/vehicle-command, Apache License 2.0). Any protocol buffer definitions or protocol details derived from that project remain under the Apache License 2.0.\n\nOpen-source components and the Google Play services library are both listed under Open source licenses. The Google Play services library is proprietary (Android SDK / Google Play services terms). The same list, with versions and links, is in THIRD_PARTY_NOTICES.md. Google Maps, Waze and the Tesla app are not bundled; ATA only opens them with an Android intent. Images and graphics (logo, launcher and store graphics) are the author\'s own works.</string>
 
     <string name="vehicle_add">Add vehicle</string>
     <string name="vehicle_edit">Edit vehicle</string>
@@ -576,7 +585,7 @@
     <string name="section_behavior_connections">Behavior &amp; connections</string>
     <string name="settings_behavior_page">Behavior, status, Bluetooth &amp; NFC</string>
     <string name="settings_demo">Demo mode</string>
-    <string name="settings_demo_desc">Shows a made-up, connected car (50 %, charging) so you can try everything without a Tesla. Nothing is sent. Starts from the same state each time it is turned on.</string>
+    <string name="settings_demo_desc">Shows a made-up, connected car (50 %%, charging) so you can try everything without a Tesla. Nothing is sent. Starts from the same state each time it is turned on.</string>
     <string name="section_status">Vehicle status</string>
     <string name="status_mode_saver">Battery saver</string>
     <string name="status_mode_saver_desc">Only when you ask: pull down on the vehicle tab or tap ↻. No reads in the background.</string>

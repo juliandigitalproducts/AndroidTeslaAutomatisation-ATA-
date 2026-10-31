@@ -169,7 +169,7 @@ class BleConnection internal constructor(private val context: Context) : Bluetoo
   private fun writeChunk(g: BluetoothGatt, char: BluetoothGattCharacteristic, chunk: ByteArray): Boolean =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
       g.writeCharacteristic(char, chunk, BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT) ==
-        BluetoothGatt.GATT_SUCCESS
+        android.bluetooth.BluetoothStatusCodes.SUCCESS
     } else {
       char.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
       char.value = chunk

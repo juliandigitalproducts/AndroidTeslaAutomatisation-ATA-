@@ -1,0 +1,6 @@
+{
+  "hash": "ASDKL",
+  "name": "Proprietary (Android SDK / Google Play services terms)",
+  "url": "https://developer.android.com/studio/terms.html",
+  "content": "Proprietary. This component is not open source.\n\nGoogle Play services, including com.google.android.gms:play-services-wearable, is licensed under the Android Software Development Kit License and the Google Play services terms, not under an open-source license:\nhttps://developer.android.com/studio/terms.html\nhttps://developers.google.com/terms\n\nThe Android Software Development Kit License is a proprietary license from Google. It grants a limited license to use the SDK to develop applications for compatible Android devices. It is not an Apache, MIT or other open-source license. Use, reproduction and distribution of these components are governed only by those terms."
+}

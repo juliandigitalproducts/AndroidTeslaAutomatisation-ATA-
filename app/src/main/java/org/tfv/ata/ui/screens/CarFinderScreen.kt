@@ -199,7 +199,8 @@ private fun CompassDial(heading: Float, bearing: Float, available: Boolean) {
   val arrowAnim by animateFloatAsState(angles[1], label = "arrow")
   val onTarget = available && kotlin.math.abs(shortestTurn(0f, bearing - heading)) < 8f
   LaunchedEffect(onTarget) { if (onTarget) haptics.performHapticFeedback(HapticFeedbackType.LongPress) }
-  val cardinals = listOf("N", "O", "S", "W").let { if (java.util.Locale.getDefault().language == "de") it else listOf("N", "E", "S", "W") }
+  val language = androidx.compose.ui.platform.LocalLocale.current.platformLocale.language
+  val cardinals = if (language == "de") listOf("N", "O", "S", "W") else listOf("N", "E", "S", "W")
 
   Canvas(Modifier.size(280.dp)) {
     val c = center

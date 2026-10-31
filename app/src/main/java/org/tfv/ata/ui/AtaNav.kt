@@ -25,6 +25,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.tfv.ata.R
 import org.tfv.ata.ui.screens.AboutScreen
+import org.tfv.ata.ui.screens.LicensesScreen
+import org.tfv.ata.ui.screens.NoticesScreen
 import org.tfv.ata.ui.screens.BackupScreen
 import org.tfv.ata.ui.screens.AutomationScreen
 import org.tfv.ata.ui.screens.Car3DScreen
@@ -168,7 +170,15 @@ fun AtaNavHost(vm: AtaViewModel, state: AtaUiState, pendingRoute: String? = null
         KeyCardScreen(vm, state, onBack = { nav.popBackStack() }, onReport = { nav.navigate("report") })
       }
       composable("automation") { AutomationScreen(vm, state, onBack = { nav.popBackStack() }) }
-      composable("about") { AboutScreen(onBack = { nav.popBackStack() }) }
+      composable("about") {
+        AboutScreen(
+          onBack = { nav.popBackStack() },
+          onOpenLicenses = { nav.navigate("licenses") },
+          onOpenNotices = { nav.navigate("notices") },
+        )
+      }
+      composable("licenses") { LicensesScreen(onBack = { nav.popBackStack() }) }
+      composable("notices") { NoticesScreen(onBack = { nav.popBackStack() }) }
       composable("pair") {
         PairScreen(
           vm, state,

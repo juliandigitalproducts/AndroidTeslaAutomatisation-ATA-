@@ -65,19 +65,21 @@ private fun RunAction(id: String, label: String, onClose: () -> Unit) {
   var message by remember { mutableStateOf("") }
   var ok by remember { mutableStateOf(false) }
 
+  val sentCar = stringResource(R.string.wear_sent_car)
+  val sentPhone = stringResource(R.string.sent_to_phone)
+  val failed = stringResource(R.string.wear_failed)
+  val locked = stringResource(R.string.wear_locked)
   fun start() {
     phase = Phase.RUNNING
     scope.launch {
       val result = WearControl.run(context, id)
       ok = result == WearResult.DIRECT || result == WearResult.RELAYED
-      message = context.getString(
-        when (result) {
-          WearResult.DIRECT -> R.string.wear_sent_car
-          WearResult.RELAYED -> R.string.sent_to_phone
-          WearResult.FAILED -> R.string.wear_failed
-          WearResult.WATCH_LOCKED -> R.string.wear_locked
-        },
-      )
+      message = when (result) {
+        WearResult.DIRECT -> sentCar
+        WearResult.RELAYED -> sentPhone
+        WearResult.FAILED -> failed
+        WearResult.WATCH_LOCKED -> locked
+      }
       phase = Phase.DONE
     }
   }

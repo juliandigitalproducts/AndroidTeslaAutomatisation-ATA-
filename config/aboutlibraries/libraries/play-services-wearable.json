@@ -1,0 +1,6 @@
+{
+  "uniqueId": "com.google.android.gms:play-services-wearable",
+  "name": "Google Play services (Wearable)",
+  "description": "Proprietary. Not open source. The Wear OS Data Layer is provided by Google Play services and is governed by the Android Software Development Kit License and the Google Play services terms.",
+  "website": "https://developers.google.com/android/guides/overview"
+}

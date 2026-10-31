@@ -1,6 +1,6 @@
 package org.tfv.ata.wear.tile
 
-import androidx.concurrent.futures.ResolvableFuture
+import androidx.concurrent.futures.CallbackToFutureAdapter
 import androidx.wear.protolayout.ActionBuilders
 import androidx.wear.protolayout.DeviceParametersBuilders.DeviceParameters
 import androidx.wear.protolayout.LayoutElementBuilders
@@ -28,22 +28,25 @@ class AtaTileService : TileService() {
   override fun onTileRequest(
     requestParams: RequestBuilders.TileRequest,
   ): ListenableFuture<TileBuilders.Tile> {
-    val future = ResolvableFuture.create<TileBuilders.Tile>()
     val layout = layout(requestParams.deviceConfiguration)
     val tile = TileBuilders.Tile.Builder()
       .setResourcesVersion(RESOURCES_VERSION)
       .setTileTimeline(Timeline.fromLayoutElement(layout))
       .build()
-    future.set(tile)
-    return future
+    return CallbackToFutureAdapter.getFuture { completer ->
+      completer.set(tile)
+      "AtaTile"
+    }
   }
 
   override fun onTileResourcesRequest(
     requestParams: RequestBuilders.ResourcesRequest,
   ): ListenableFuture<Resources> {
-    val future = ResolvableFuture.create<Resources>()
-    future.set(Resources.Builder().setVersion(RESOURCES_VERSION).build())
-    return future
+    val resources = Resources.Builder().setVersion(RESOURCES_VERSION).build()
+    return CallbackToFutureAdapter.getFuture { completer ->
+      completer.set(resources)
+      "AtaTileResources"
+    }
   }
 
   private fun launch(action: AtaAction): Clickable =
